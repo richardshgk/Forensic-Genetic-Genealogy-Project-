@@ -11,32 +11,57 @@ df = pd.read_excel(r'assets\FGG_Database_v_2021_3.xlsx')
 df.replace('nd', np.nan, inplace=True)
 df = df.iloc[:-1 , :]
 
-# (data came presorted by investigation type)
+# print(df.shape)
+# print(df.columns)
 
-# Limiting data to only criminal investigations 
-# investigation_type = df['INVEST'].value_counts()["CRIM"]
+# Sorting data by investigation type 
+sorting = df.sort_values("INVEST")
+
+# Limit data to only criminal investigations, remove unused columns 
+investigation_type = df['INVEST'].value_counts()["CRIM"]
 # print(investigation_type)  #count 446
-df = df.iloc[:446, :]
-
+df = df.iloc[:446, :16]
 # print(df.INVEST.head)
 
-#print(df.shape)
-#print(df.columns)
+# Calculate the number of NANs in the columns
+count_nan_fggopen = df['FGGOPEN'].isna().sum()
+# print(count_nan_fggopen) # count = 239
+count_nan_open = df['OPEN'].isna().sum()
+# print(count_nan_open) # count = 11
+count_nan_clear = df['CLEAR'].isna().sum()
+# print(count_nan_clear) # count = 0 
 
+# Remove NANs
+df = df.dropna(subset=['OPEN'])
+
+# Remove bad line
+# print(df.iloc[343, 13])
+
+# print(df.head)
+
+# print(df[df['OPEN'].isna()])
+# print(df[df['FGGOPEN'].isna()])
+
+# Convert to datetime, remove everything but year
 def date_convert(date_to_convert):
      return datetime.datetime.strptime(date_to_convert, '%m%d%Y').strftime("%Y-%m-%d")
 
-open = df.OPEN
-FGG_open = df.FGGOPEN
-closed = df.CLEAR
-
 df['open_year'] = pd.DatetimeIndex(df['OPEN']).year
 print(df.open_year.head)
+# df['clear_year'] = pd.DatetimeIndex(df['CLEAR']).year
+# print(df.clear_year.head)
+# df['fggopen_year'] = pd.DatetimeIndex(df['FGGOPEN']).year
+# print(df.fggopen_year.head)
+
+
+# Convert years into initgers 
+
+
+# print(df.FGGOPEN.dtype)
+# print(df.groupby("FGGOPEN").mean())
 
 # print(df.OPEN.head)
 # print(df.FGGOPEN.head)
 # print(df.CLEAR.head)
 
-# reformat all dates to match each other. find out how many FGG start dates are empty and decide how to proceed from there. 
-
-# subtract open date from FGG date; subtract close date from FGG date
+# subtract open date from clear date; subtract clear date from FGG date
