@@ -34,10 +34,10 @@ count_nan_clear = df['CLEAR'].isna().sum()
 # Remove NANs
 df = df.dropna(subset=['OPEN'])
 
-# Remove bad line
+# Remove line with nonesense data
 # print(df.iloc[343, 13])
-
-# print(df.head)
+df = df.drop(index=354 , axis=0)
+# print(df.OPEN[330:350])
 
 # print(df[df['OPEN'].isna()])
 # print(df[df['FGGOPEN'].isna()])
@@ -47,10 +47,10 @@ def date_convert(date_to_convert):
      return datetime.datetime.strptime(date_to_convert, '%m%d%Y').strftime("%Y-%m-%d")
 
 df['open_year'] = pd.DatetimeIndex(df['OPEN']).year
-print(df.open_year.head)
-# df['clear_year'] = pd.DatetimeIndex(df['CLEAR']).year
+# print(df.open_year.head)
+df['clear_year'] = pd.DatetimeIndex(df['CLEAR']).year
 # print(df.clear_year.head)
-# df['fggopen_year'] = pd.DatetimeIndex(df['FGGOPEN']).year
+df['fggopen_year'] = pd.DatetimeIndex(df['FGGOPEN']).year
 # print(df.fggopen_year.head)
 
 
