@@ -33,10 +33,12 @@ count_nan_clear = df['CLEAR'].isna().sum()
 
 # Remove NANs
 df = df.dropna(subset=['OPEN'])
+df = df.dropna(subset=['FGGOPEN'])
+# print(df.shape)
 
 # Remove line with nonesense data
 # print(df.iloc[343, 13])
-df = df.drop(index=354 , axis=0)
+# df = df.drop(index=354 , axis=0)
 # print(df.OPEN[330:350])
 
 # print(df[df['OPEN'].isna()])
@@ -53,15 +55,15 @@ df['clear_year'] = pd.DatetimeIndex(df['CLEAR']).year
 df['fggopen_year'] = pd.DatetimeIndex(df['FGGOPEN']).year
 # print(df.fggopen_year.head)
 
+# subtract open date from clear date; subtract clear date from FGG date
+df["open_to_close"] = df['clear_year'] - df['open_year']
+print(df['open_to_close'].head)
+df["fggopen_to_close"] = df['clear_year'] - df['fggopen_year']
+print(df['fggopen_to_close'].head)
 
-# Convert years into initgers 
 
 
 # print(df.FGGOPEN.dtype)
-# print(df.groupby("FGGOPEN").mean())
+# print(df.CLEAR.dtype)
+# print(df.OPEN.dtype)
 
-# print(df.OPEN.head)
-# print(df.FGGOPEN.head)
-# print(df.CLEAR.head)
-
-# subtract open date from clear date; subtract clear date from FGG date
