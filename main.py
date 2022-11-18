@@ -68,7 +68,7 @@ plt.style.use("ggplot")
 
 # Create multiple plots 
 fig, (ax1, ax2) = plt.subplots(1,2)
-fig.suptitle('Closing Cases Using Forensic Genetic Geneology(FGG)')
+fig.suptitle('Closing Cases Using Forensic Genetic Genealogy(FGG)')
 
 # Units for bins
 bins1 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65]
