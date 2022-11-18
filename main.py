@@ -57,29 +57,37 @@ df["open_to_close"] = df['clear_year'] - df['open_year']
 df["fggopen_to_close"] = df['clear_year'] - df['fggopen_year']
 # print(df['fggopen_to_close'].head)
 
-
+# Get count of each difference in years
 # open_count = df["open_to_close"].value_counts(sort=False)
 # fggopen_count = df["fggopen_to_close"].value_counts(ascending=True)
 # print(open_count)
 # print(fggopen_count)
 
-
-# Create and format histogram 
+# Plot style
 plt.style.use("ggplot")
-fig, (ax1, ax2) = plt.subplots(1, 2)
+
+# Create multiple plots 
+fig, (ax1, ax2) = plt.subplots(1,2)
 fig.suptitle('Closing Cases Using Forensic Genetic Geneology(FGG)')
-# ax1.plot(x, y)
-# ax2.plot(x, -y)
 
-bins = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65]
+# Units for bins
+bins1 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65]
+bins2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
-plt.hist(df['open_to_close'], bins=bins, edgecolor="black", alpha=0.5, label="Total")
-plt.hist(df['fggopen_to_close'], bins=bins, edgecolor="black", alpha=0.5, label="After FGG Initiated")
+# Historgram one, "open to close"
+ax1.hist(df['open_to_close'], bins=bins1, color="#E24A33", edgecolor="black", alpha=0.75)
 
-plt.title("")
-plt.xlabel("Years")
-plt.ylabel("Number of Cases")
-plt.legend()
+ax1.set_title("Total Number of Years")
+ax1.set_xlabel("Years", fontsize=12)
+ax1.set_ylabel("Number of Cases", fontsize=12)
+
+# Histogram 2, "fgg open to close"
+ax2.hist(df['fggopen_to_close'], bins=bins2, color="#988ED5", edgecolor="black", alpha=0.75)
+
+ax2.set_title("Years After FGG Initiated")
+ax2.set_xlabel("Years", fontsize=12)
+ax2.set_ylabel("Number of Cases", fontsize=12)
+
 
 plt.show()
 
