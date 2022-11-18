@@ -1,5 +1,5 @@
 # bring in modules (matplotlib, pandas)
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import datetime
@@ -36,11 +36,6 @@ df = df.dropna(subset=['OPEN'])
 df = df.dropna(subset=['FGGOPEN'])
 # print(df.shape)
 
-# Remove line with nonesense data
-# print(df.iloc[343, 13])
-# df = df.drop(index=354 , axis=0)
-# print(df.OPEN[330:350])
-
 # print(df[df['OPEN'].isna()])
 # print(df[df['FGGOPEN'].isna()])
 
@@ -55,15 +50,36 @@ df['clear_year'] = pd.DatetimeIndex(df['CLEAR']).year
 df['fggopen_year'] = pd.DatetimeIndex(df['FGGOPEN']).year
 # print(df.fggopen_year.head)
 
-# subtract open date from clear date; subtract clear date from FGG date
+
+# Find number of years to close case from open, number of years to close case after sending for FGG
 df["open_to_close"] = df['clear_year'] - df['open_year']
-print(df['open_to_close'].head)
+# print(df['open_to_close'].head)
 df["fggopen_to_close"] = df['clear_year'] - df['fggopen_year']
-print(df['fggopen_to_close'].head)
+# print(df['fggopen_to_close'].head)
 
 
+# open_count = df["open_to_close"].value_counts(sort=False)
+# fggopen_count = df["fggopen_to_close"].value_counts(ascending=True)
+# print(open_count)
+# print(fggopen_count)
 
-# print(df.FGGOPEN.dtype)
-# print(df.CLEAR.dtype)
-# print(df.OPEN.dtype)
+
+# Create and format histogram 
+plt.style.use("ggplot")
+fig, (ax1, ax2) = plt.subplots(1, 2)
+fig.suptitle('Closing Cases Using Forensic Genetic Geneology(FGG)')
+# ax1.plot(x, y)
+# ax2.plot(x, -y)
+
+bins = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65]
+
+plt.hist(df['open_to_close'], bins=bins, edgecolor="black", alpha=0.5, label="Total")
+plt.hist(df['fggopen_to_close'], bins=bins, edgecolor="black", alpha=0.5, label="After FGG Initiated")
+
+plt.title("")
+plt.xlabel("Years")
+plt.ylabel("Number of Cases")
+plt.legend()
+
+plt.show()
 
