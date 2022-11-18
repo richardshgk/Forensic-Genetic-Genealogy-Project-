@@ -23,8 +23,9 @@ For more details on how the data was collected, what criteria were used, and the
 - pip install datetime
 - pip install xlrd 
 
-## Code Kentucky
 -------------------------------------------------------------------------------------------------------------------------
+
+## Code Kentucky
 This project was done for a final grade a Code Kentucky. 
 
 - Data was read in from an xlsx file using the pandas and xlrd modules.
